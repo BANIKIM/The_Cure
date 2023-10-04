@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float MoveSpeed=0;
     public Vector2 inputVec;
+    public float speed;
+    public Enemy_Scanner scanner;
 
     Rigidbody2D rigid;//캐릭터 움직임을 위해서 선언
     SpriteRenderer spriter; //좌우 변경모션을 만들기 위해서 선언
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        scanner = GetComponent<Enemy_Scanner>();
     }
 
 
