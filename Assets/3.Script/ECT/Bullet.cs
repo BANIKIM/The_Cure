@@ -20,17 +20,23 @@ public class Bullet : MonoBehaviour
 
         if(per > -1)
         {
-            rigid.velocity = dir;
+            rigid.velocity = dir * 15f;
         }
 
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!collision.CompareTag("Enemy"))
+        if(!collision.CompareTag("Enemy") || per == -1)
         {
             return;
         }
-        
+        per--;
+
+        if(per == -1)
+        {
+            rigid.velocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
     }
 }

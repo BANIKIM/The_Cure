@@ -96,7 +96,7 @@ public class Weapon : MonoBehaviour
             Vector3 rotVec = Vector3.forward * 360 * index / count;
             bullet.Rotate(rotVec);
             bullet.Translate(bullet.up * 1.5f, Space.World);
-            bullet.GetComponent<Bullet>().Init(damage, -1); // 근접무기이므로 무한으로 관통이 가능하다
+            bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // 근접무기이므로 무한으로 관통이 가능하다
         }
     }
 
@@ -106,8 +106,14 @@ public class Weapon : MonoBehaviour
         if (!player.scanner.nearestTarget)
             return;
 
+        Vector3 targetPos = player.scanner.nearestTarget.position;
+        Vector3 dir = targetPos - transform.position; // 크기가 포함된 방향 = 목표위치 - 나의 위치
+        dir = dir.normalized;
+
         Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
         bullet.position = transform.position;
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up,dir);
+        bullet.GetComponent<Bullet>().Init(damage, count, dir);
     }
 
 }
